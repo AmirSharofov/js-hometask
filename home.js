@@ -1,30 +1,33 @@
-// let index = prompt("Введите число:")
-// let arr = ["Aleksey", "Kartoshka", "Margarita", "Morgenshtern", "Monica"]
-// let find = false
-
-// for(let m = 0; m < arr.length; m++) {
-//     if(m == index) {
-//         find = true;
-//         arr.splice(m, 1);
-//         console.log("Элемент успешно удален из массива.");
-//         break;      
-//     }
-// }
-// if(!find) {
-//     console.log("Токого элемента нет в массиве.");
-// }
-// console.log(arr);
-
-let arr2 = [1, 2, false, 'hello', 24, 'world', undefined, null, 'error', 22]
-let numeral = 0 
-for(let n = 0; n < arr2.length; n++){
-    if (typeof arr2[n] === 'number') {
-        numeral++;     
+function createCounter(n) {
+    function counter() {
+        return n;
     }
-}
-
-if (numeral > 5) {
-    console.log('good');
-}else{
-    console.log('bad');
-}
+    return counter;
+  }
+  
+  function expect(val) {
+    return {
+        toBe: function(val2) {
+            if (val === val2) {
+                return {value: true};
+            } else {
+                throw new Error("Not Equal");
+            }
+        },
+        notToBe: function(val2) {
+            if (val !== val2) {
+                return {value: true};
+            } else {
+                throw new Error("Equal");
+            }
+        }
+    }
+  }
+  function map(arr, fn) {
+    const result = [];
+    for (let i = 0; i < arr.length; i++) {
+        result.push(fn(arr[i], i));
+    }
+    return result;
+  }
+  
