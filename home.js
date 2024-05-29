@@ -1,33 +1,43 @@
-function createCounter(n) {
-    function counter() {
-        return n;
+const formS = document.forms.signup;
+const inputs = document.querySelectorAll('input');
+const name = document.querySelector('name')
+const email = document.querySelector('email')
+const about = document.querySelector('about')
+const js = document.querySelector('js')
+const html = document.querySelector('html')
+const css = document.querySelector('css')
+const users = [];
+
+
+const regex = {
+    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,15}$/gm
+}
+
+inputs.forEach((inp) => {
+    inp.onkeyup = () => {
+        validate(inp, regex[inp.name]);
     }
-    return counter;
-  }
-  
-  function expect(val) {
-    return {
-        toBe: function(val2) {
-            if (val === val2) {
-                return {value: true};
-            } else {
-                throw new Error("Not Equal");
-            }
-        },
-        notToBe: function(val2) {
-            if (val !== val2) {
-                return {value: true};
-            } else {
-                throw new Error("Equal");
-            }
-        }
+});
+
+function validate(input, pattern) {
+    const isCorrect = pattern.test(input.value);
+
+    if (isCorrect) {
+        input.style.border = '2px solid green';
+    } else {
+        input.style.border = '2px solid red';
     }
-  }
-  function map(arr, fn) {
-    const result = [];
-    for (let i = 0; i < arr.length; i++) {
-        result.push(fn(arr[i], i));
-    }
-    return result;
-  }
-  
+}
+
+formS.onsubmit = function (e) {
+    e.preventDefault();
+
+    const fm = new FormData(formS);
+    const user = {};
+
+    fm.forEach((value, key) => {
+        user[key] = value;
+    });
+
+    users.push(user);
+}
